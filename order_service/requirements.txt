@@ -1,0 +1,6 @@
+fastapi[standard]
+pika
+uvicorn
+psycopg2-binary
+sqlalchemy
+alembic
