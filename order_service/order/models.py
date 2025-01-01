@@ -10,3 +10,4 @@ class Order(Base):
     user_id = Column(Integer, nullable=False)
     product_id = Column(Integer, nullable=False)
     quantity = Column(Integer, nullable=False)
+    status = Column(String(50), default="pending", nullable=False)
