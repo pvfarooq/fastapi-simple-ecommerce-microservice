@@ -2,10 +2,6 @@ import json
 from dataclasses import dataclass
 from typing import Any, Dict
 
-RABBITMQ_HOST = "rabbitmq"
-STOCK_DEDUCTION_QUEUE = "stock_deduction"
-ORDER_STATUS_QUEUE = "order_status"
-
 
 @dataclass
 class Message:
