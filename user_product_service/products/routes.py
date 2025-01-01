@@ -11,8 +11,12 @@ router = APIRouter(prefix="/products", tags=["Products"])
 @router.get("/")
 def list_products(session: Session = Depends(get_session)) -> ProductList:
     products = crud.get_products(session)
-    print(products)
     return ProductList(products=products)
+
+
+@router.get("/{product_id}")
+def get_product(product_id: int, session: Session = Depends(get_session)):
+    return crud.get_product_by_id(session, product_id)
 
 
 @router.post("/load-mock-data")

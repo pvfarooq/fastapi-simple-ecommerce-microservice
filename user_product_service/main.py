@@ -2,9 +2,9 @@ import threading
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from messaging.consumer import StockDeductionConsumer
+from messaging import product_queue
+from messaging.services import process_product_events
 from products.routes import router as products_router
-from products.services import StockService
 from users.routes import router as users_router
 
 app = FastAPI(
@@ -23,9 +23,12 @@ app.add_middleware(
 )
 
 
+def start_product_queue_consumer():
+    product_queue.consume(process_product_events)
+    product_queue.start_consuming()
+
+
 @app.on_event("startup")
 async def startup_event():
-    stock_service = StockService()
-    consumer = StockDeductionConsumer(stock_service)
-    consumer_thread = threading.Thread(target=consumer.start_consuming, daemon=True)
+    consumer_thread = threading.Thread(target=start_product_queue_consumer, daemon=True)
     consumer_thread.start()

@@ -6,3 +6,4 @@ sqlalchemy
 alembic
 passlib
 jwt
+requests
