@@ -1,61 +1,73 @@
-# Simple e-commerce backend service using microservices architecture. 
-*(for learning purposes)*
+# Simple e-commerce backend service using microservices 
+A learning-focused implementation of a microservices-based e-commerce backend system. This project demonstrates microservices architecture, message queuing, and containerization principles using modern Python technologies.
 
-### Technologies used:
-- FastAPI
-- SQLAlchemy
-- Alembic
-- Docker
-- RabbitMQ
-- PostgreSQL
-- Pydantic
+## Technology Stack
 
-### Folder structure:
+#### Backend Framework & Tools
+
+FastAPI: Modern, fast web framework for building APIs
+SQLAlchemy: SQL toolkit and ORM
+Alembic: Database migration tool
+Pydantic: Data validation using Python type annotations
+
+#### Data Storage & Messaging
+
+PostgreSQL: Primary database for all services
+RabbitMQ: Message broker for inter-service communication
+
+#### Infrastructure
+
+Docker: Containerization of services
+Docker Compose: Multi-container orchestration
+
+###Project Structure
 ```
-main_service/
-|   alembic/
-|   user/
-        models.py
-        schemas.py
-        crud.py
-|   product/
-        models.py
-        schemas.py
-        crud.py
-|   core/
-        db.py
-        config.py
-│   Dockerfile (Main service Dockerfile)
-│   main.py (FastAPI entrypoint for main service)
-│   requirements.txt (Main service requirements)
-|   .env (Environment variables)
-order_service/
-|   alembic/
-|   order/
-        models.py
-        schemas.py
-        crud.py
-|   core/
-|       db.py
-        config.py
-│   Dockerfile (Order service Dockerfile)
-│   main.py (FastAPI entrypoint for order service)
-│   requirements.txt (Order service requirements)
-|   .env (Environment variables)
-docker-compose.yml (Docker compose file)
-Makefile (commands for running the services)
-README.md
+├── main_service/             # User and Product management service
+│   ├── alembic/              # Database migrations
+│   ├── messaging/            # RabbitMQ communication handlers
+│   ├── user/                 # User module
+│   │   ├── models.py         # SQLAlchemy models
+│   │   ├── schemas.py        # Pydantic schemas
+│   │   └── crud.py          # Database operations
+│   ├── product/             # Product module
+│   │   ├── models.py
+│   │   ├── schemas.py
+│   │   └── crud.py
+│   ├── core/                # Core configurations
+│   │   ├── db.py           # Database configuration
+│   │   └── config.py       # Service configuration
+│   ├── Dockerfile
+│   ├── main.py             # FastAPI application entry point
+│   ├── requirements.txt
+│   └── .env
+│
+├── order_service/           # Order management service
+│   ├── alembic/
+│   ├── messaging/
+│   ├── order/
+│   │   ├── models.py
+│   │   ├── schemas.py
+│   │   └── crud.py
+│   ├── core/
+│   │   ├── db.py
+│   │   └── config.py
+│   ├── Dockerfile
+│   ├── main.py
+│   ├── requirements.txt
+│   └── .env
+│
+├── docker-compose.yml       # Service orchestration configuration
+├── Makefile                # Development automation commands
+└── README.md
 ```
 
-Main service is responsible for handling users and products. 
-Tables created in the database are:
-- User
-- Product
+### API Documentation
+Once the services are running, access the API documentation:
 
-Order service is responsible for handling orders.
-Tables created in the database are:
-- Order
+Main Service: http://localhost:8000/docs
+
+Order Service: http://localhost:8001/docs
 
 
-Database used is PostgreSQL.
-Message broker used is RabbitMQ.
+#### Note
+This project is intended for learning purposes and demonstrates microservices architecture concepts. It may not be suitable for production use without additional security and performance considerations.
