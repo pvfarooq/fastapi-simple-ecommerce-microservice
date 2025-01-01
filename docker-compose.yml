@@ -1,15 +1,15 @@
 services:
   main_app:
     build:
-      context: ./main_service
+      context: ./user_product_service
       dockerfile: Dockerfile
-    container_name: main_service
+    container_name: user_product_service
     ports:
       - 8000:8000
     env_file:
-      - ./main_service/.env
+      - ./user_product_service/.env
     volumes:
-      - ./main_service:/app
+      - ./user_product_service:/app
     working_dir: /app
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     depends_on:
@@ -50,7 +50,7 @@ services:
     ports:
       - 5432:5432
     env_file:
-      - ./main_service/.env
+      - ./user_product_service/.env
     volumes:
       - ecom_main_db:/var/lib/postgresql/data
 
@@ -70,6 +70,11 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 5s
+      timeout: 10s
+      retries: 5
     deploy:
       resources:
         limits:
