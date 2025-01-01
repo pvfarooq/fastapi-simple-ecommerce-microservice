@@ -1,5 +1,5 @@
 from core.exceptions import AlreadyExistsException, UnauthorizedException
-from core.security import get_password_hash, verify_password
+from core.pwd_hasher import get_password_hash, verify_password
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
