@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 
 import jwt
-from core.config import settings
+from core.config import Audiences, settings
 
 from .schemas import Token
 
@@ -14,7 +14,13 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> T
         expire = datetime.now() + timedelta(
             seconds=settings.ACCESS_TOKEN_EXPIRE_SECONDS
         )
-    to_encode.update({"exp": expire})
+    to_encode.update(
+        {
+            "exp": expire,
+            "iss": settings.ISSUER,
+            "aud": [Audiences.ORDER_SERVICE, Audiences.PRODUCT_SERVICE],
+        }
+    )
     access_token = jwt.encode(
         to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM
     )

@@ -1,31 +1,35 @@
 import jwt
 from core.db import session_local
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+from fastapi import Depends, HTTPException, Request
+from fastapi.security import HTTPBearer
 from users import crud
 
-from .config import settings
+from .config import Audiences, settings
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="users/login")
+auth_scheme = HTTPBearer()
 
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
+def get_current_user(request: Request, token: str = Depends(auth_scheme)):
     try:
         payload = jwt.decode(
-            token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM]
+            token.credentials,
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM],
+            audience=[Audiences.PRODUCT_SERVICE, Audiences.ORDER_SERVICE],
+            issuer=settings.ISSUER,
         )
         user_id: str = payload.get("sub")
         if user_id is None:
             raise HTTPException(
                 status_code=401, detail="Invalid authentication credentials"
             )
-        token_data = {"user_id": user_id}
         with session_local() as session:
-            user = crud.get_user_by_id(token_data["user_id"], session)
+            user = crud.get_user_by_id(user_id, session)
             if user is None:
                 raise HTTPException(status_code=404, detail="Invalid user")
+        request.state.user = user
     except jwt.PyJWTError:
         raise HTTPException(
             status_code=401, detail="Invalid authentication credentials"
         )
-    return token_data
+    return user_id
