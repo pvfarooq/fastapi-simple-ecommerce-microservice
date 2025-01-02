@@ -4,22 +4,23 @@ from fastapi import APIRouter, Depends
 from products import crud
 from sqlalchemy.orm import Session
 
-router = APIRouter(prefix="/products", tags=["Products"])
+router = APIRouter(
+    prefix="/products", tags=["Products"], dependencies=[Depends(get_current_user)]
+)
 
 
 @router.get("/")
 def list_products(
-    current_user: dict = Depends(get_current_user),
+    ordering: str = "id",
     session: Session = Depends(get_session),
 ):
-    products = crud.get_products(session)
+    products = crud.get_products(session, order_by=ordering)
     return products
 
 
 @router.get("/{product_id}")
 def get_product(
     product_id: int,
-    current_user: dict = Depends(get_current_user),
     session: Session = Depends(get_session),
 ):
     return crud.get_product_by_id(session, product_id)

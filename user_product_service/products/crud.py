@@ -1,12 +1,13 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+from sqlalchemy.sql import text
 
 from .models import Product
 from .utils import get_mock_products
 
 
-def get_products(session: Session):
-    query = select(Product)
+def get_products(session: Session, order_by: str = "-stock"):
+    query = select(Product).order_by(text(order_by))
     products = session.execute(query)
     return products.scalars().all()
 
