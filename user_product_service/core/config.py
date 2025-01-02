@@ -1,6 +1,12 @@
 import os
 
 
+class Audiences:
+    ORDER_SERVICE = "https://orders.myapp.com"
+    PRODUCT_SERVICE = "https://products.myapp.com"
+    AUTH_SERVICE = "https://www.identity.myapp.com"
+
+
 class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
     POSTGRES_USER = os.environ.get("POSTGRES_USER")
@@ -12,6 +18,7 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
     ALGORITHM = "HS256"
     ACCESS_TOKEN_EXPIRE_SECONDS = 60 * 60 * 24 * 7  # 1 week
+    ISSUER = "https://www.identity.myapp.com"
 
     SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
