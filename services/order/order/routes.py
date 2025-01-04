@@ -1,6 +1,7 @@
+from fastapi import APIRouter, Depends, HTTPException, Request
+
 from core.db import get_session
 from core.token import verify_token
-from fastapi import APIRouter, Depends, HTTPException, Request
 from messaging.services import publish_product_stock_reduction
 from order import crud
 from order.services import validate_product_stock
@@ -36,7 +37,3 @@ def create_order(
 def cancel_order(order_id: int, session=Depends(get_session)):
     order = crud.get_order_by_id(order_id, session)
     return {"order": order}
-    # if order:
-    #     crud.cancel_order(order, session)
-    #     return {"message": "Order cancelled successfully"}
-    # return {"message": "Order not found"}

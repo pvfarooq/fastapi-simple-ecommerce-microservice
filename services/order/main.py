@@ -1,6 +1,7 @@
 import threading
 
 from fastapi import FastAPI
+
 from messaging import order_queue
 from messaging.services import process_order_events
 from order.routes import router as order_router

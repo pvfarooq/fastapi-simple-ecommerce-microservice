@@ -56,8 +56,10 @@ services:
       - ./services/product:/app
       - /app/node_modules
     working_dir: /app
-    command: npm run serve
+    command: npm run dev
     restart: always
+    depends_on:
+      - rabbitmq
 
 
   user_db:
@@ -76,7 +78,7 @@ services:
     ports:
       - 5433:5432
     env_file:
-      - ./services/user/.env
+      - ./services/order/.env
     volumes:
       - ecom_order_db:/var/lib/postgresql/data
 
