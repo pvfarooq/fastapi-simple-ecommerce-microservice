@@ -45,10 +45,10 @@ user-alembic-up: ## Alembic upgrade head in user service
 order-alembic-up: ## Alembic upgrade head in order service
 	docker compose exec order_app alembic upgrade head
 
-.PHONY: user_alembic_down
-user_alembic_down: ## Alembic downgrade head in user service
+.PHONY: user-alembic-down
+user-alembic-down: ## Alembic downgrade head in user service
 	docker compose exec user_app alembic downgrade -1
 
-.PHONY: order_alembic_down
-order_alembic_down: ## Alembic downgrade head in order service
+.PHONY: order-alembic-down
+order-alembic-down: ## Alembic downgrade head in order service
 	docker compose exec order_app alembic downgrade -1
