@@ -13,6 +13,10 @@ main-sh: ## Run bash shell in main service container
 order-sh: ## Run bash shell in order service container
 	docker compose exec order_app /bin/bash
 
+.PHONY: product-sh
+product-sh: ## Run bash shell in product service container
+	docker compose exec product_app /bin/sh
+
 .PHONY: main-alembic-rev
 main-alembic-rev: ## Create alembic revision in main service container
 	@echo "Enter revision message:"; \
