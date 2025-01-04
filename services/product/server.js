@@ -6,7 +6,7 @@ const dotenv = require('dotenv').config()
 const productRoutes = require('./routes/product.route.js');
 const {connectToMongoDB} = require('./database/init.js')
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8008;
 
 const app = express();
 
@@ -27,6 +27,7 @@ app.get('/health', (req, res) => {
         version: process.env.npm_package_version || '1.0.0'
     });
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
