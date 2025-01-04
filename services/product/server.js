@@ -4,7 +4,8 @@ const cors = require('cors');
 const dotenv = require('dotenv').config()
 
 const productRoutes = require('./routes/product.route.js');
-const {connectToMongoDB} = require('./database/init.js')
+const {connectToMongoDB} = require('./config/database.js');
+const createRabbitMQConnection = require("./config/rabbitmq.js");
 
 const PORT = process.env.PORT || 8008;
 
@@ -20,6 +21,10 @@ app.use("/api/products", productRoutes);
 
 // Connect to MongoDB
 connectToMongoDB();
+
+// Connect to RabbitMQ
+createRabbitMQConnection();
+
 
 app.get('/health', (req, res) => {
     res.status(200).json({
