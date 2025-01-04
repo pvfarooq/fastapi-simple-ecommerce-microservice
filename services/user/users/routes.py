@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from core.db import get_session
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
+
+from core.db import get_session
 from users import crud
 
 from .schemas import LoginRequest, SignupRequest, Token
