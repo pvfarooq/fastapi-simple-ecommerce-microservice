@@ -11,7 +11,7 @@ def publish_product_stock_reduction(order: Order):
         "event": "product_stock_reduction",
         "quantity": order.quantity,
         "product_id": order.product_id,
-        "order_id": order.id,
+        "order_id": order.order_id,
     }
     product_queue.publish(json.dumps(event))
 
@@ -24,7 +24,7 @@ def process_order_events(event):
     order_id = event["order_id"]
 
     if event_type == "stock_unavailable":
-        print(f"Stock unavailable for order: {order_id} in User-Product Service")
+        print(f"Stock unavailable for order: {order_id}")
         print("Cancelling order")
         with session_local() as session:
             crud.cancel_order(order_id, session)
