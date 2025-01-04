@@ -43,6 +43,22 @@ services:
           cpus: "0.5"
           memory: 512M
 
+  product_app:
+    build:
+      context: ./services/product
+      dockerfile: Dockerfile
+    container_name: product_service
+    ports:
+      - 3000:3000
+    env_file:
+      - ./services/product/.env
+    volumes:
+      - ./services/product:/app
+      - /app/node_modules
+    working_dir: /app
+    command: npm run serve
+    restart: always
+
 
   main_app_db:
     image: postgres:15
