@@ -2,7 +2,6 @@ from logging.config import fileConfig
 
 from alembic import context
 from core.db import Base, get_db_url
-from products.models import Product
 from sqlalchemy import engine_from_config, pool
 from users.models import User
 
