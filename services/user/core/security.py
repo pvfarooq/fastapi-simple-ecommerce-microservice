@@ -1,7 +1,8 @@
 import jwt
-from core.db import session_local
 from fastapi import Depends, HTTPException, Request
 from fastapi.security import HTTPBearer
+
+from core.db import session_local
 from users import crud
 
 from .config import Audiences, settings
